@@ -33,7 +33,7 @@ def query_books_in_library(library_name):
 
 def query_librarian_of_library(library_name):
     try:
-        librarian = Librarian.objects.get(library__name=library_name)  # Getting librarian by library
+        librarian = Librarian.objects.get(library=library_name)  # Getting librarian by library
         print(f"\nLibrarian of {library_name}: {librarian.name}")
     except Librarian.DoesNotExist:
         print(f"Library '{library_name}' does not have an assigned librarian.")
