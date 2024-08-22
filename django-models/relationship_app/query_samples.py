@@ -6,14 +6,15 @@ import django
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Set up Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django-models.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_models.settings')
 django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
+
 def query_books_by_author(author_name):
     try:
         author = Author.objects.get(name=author_name)
-        books = author.books.all()
+        books = Book.objects.filter(author=author)  # Filtering books by the author
         print(f"Books by {author_name}:")
         for book in books:
             print(f"- {book.title}")
