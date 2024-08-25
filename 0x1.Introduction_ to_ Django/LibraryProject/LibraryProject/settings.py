@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*0+_%mx6oiu4y$)_a2@b5ht3w7i4c&9@1=7o@)vto^n_=0umf='
+SECRET_KEY = 'django-insecure-%mu4q)yy+ycy1hde)mkf8(es7b*4r+@11a+nxrj$qzm_wdh170'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'practice_alx'
+    'bookshelf',
 ]
 
 MIDDLEWARE = [
@@ -76,12 +76,8 @@ WSGI_APPLICATION = 'LibraryProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'practice_alx',
-        'USER': 'ismail',
-        'PASSWORD': 'alxpassword',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
