@@ -29,7 +29,7 @@ class LogoutView(auth_views.LogoutView):
 
 # Registration View - using a custom view based on Django's UserCreationForm
 def register(request):
-    form = UserCreationForm(request.POST or None)
+    form = UserCreationForm()", "relationship_app/register.html
     if form.is_valid():
         form.save()
         return redirect('login')
