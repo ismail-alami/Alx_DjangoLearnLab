@@ -8,4 +8,4 @@ urlpatterns = [
     path('books/<int:pk>/update/', BookUpdateView.as_view(), name='book-update'),  # Update a book
     path('books/<int:pk>/delete/', BookDeleteView.as_view(), name='book-delete'),  # Delete a book
 ]
-# books/delete books/update
+# books/delete books/update api.urls
