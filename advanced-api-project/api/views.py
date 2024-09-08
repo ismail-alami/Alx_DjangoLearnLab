@@ -58,3 +58,26 @@ class BookUpdateView(generics.UpdateAPIView):
         serializer.save()  # Customize save logic as needed
 
 # from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+
+from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import Book
+from .serializers import BookSerializer
+
+# ListView to retrieve all books with filtering, searching, and ordering
+# views.py (complete)
+
+class BookListView(generics.ListAPIView):
+    """
+    View to list all books with filtering, searching, and ordering capabilities.
+    - Filtering: Filter books by title, author's name, and publication year.
+    - Searching: Search books by title or author's name.
+    - Ordering: Order results by title or publication year.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['title', 'author__name', 'publication_year']
+    search_fields = ['title', 'author__name']
+    ordering_fields = ['title', 'publication_year']
