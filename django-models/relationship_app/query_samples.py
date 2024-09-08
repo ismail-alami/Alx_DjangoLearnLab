@@ -3,10 +3,10 @@ import sys
 import django
 
 # Ensure the project directory is in the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(file))))
 
 # Set up Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_models.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django-models.settings')
 django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
@@ -40,7 +40,7 @@ def query_librarian_of_library(library_name):
     except Library.DoesNotExist:
         print(f"Library with name '{library_name}' does not exist.")
 
-if __name__ == "__main__":
+if name == "main":
     # You can change these values to test with different data
     author_name = "J.K. Rowling"
     library_name = "Central Library"
