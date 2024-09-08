@@ -84,3 +84,5 @@ def edit_book(request, book_id):
 def delete_book(request, book_id):
     # Implementation for deleting a book
     pass
+
+# from django.contrib.auth.decorators import permission_required
