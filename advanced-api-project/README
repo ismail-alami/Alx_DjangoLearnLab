@@ -1,0 +1,14 @@
+## API Endpoints Overview
+
+- **GET /books/**: Retrieve a list of all books (publicly accessible).
+- **GET /books/<int:pk>/**: Retrieve details of a specific book (publicly accessible).
+- **POST /books/create/**: Create a new book (authenticated users only).
+- **PUT/PATCH /books/<int:pk>/update/**: Update an existing book (authenticated users only).
+- **DELETE /books/<int:pk>/delete/**: Delete a book (authenticated users only).
+
+### Permissions
+- Read access (ListView, DetailView) is allowed for all users.
+- Create, Update, and Delete operations are restricted to authenticated users.
+
+### Customizations
+- Custom validations and hooks implemented in CreateView and UpdateView to handle specific data submissions.
