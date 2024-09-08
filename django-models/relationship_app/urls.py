@@ -16,3 +16,5 @@ urlpatterns = [
     path('edit-book/<int:book_id>/', views.edit_book, name='edit_book'),
     path('delete-book/<int:book_id>/', views.delete_book, name='delete_book'),
 ]
+# LogoutView.as_view(template_name=
+# LoginView.as_view(template_name=
