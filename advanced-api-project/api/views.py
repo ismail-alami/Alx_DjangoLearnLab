@@ -56,3 +56,5 @@ class BookUpdateView(generics.UpdateAPIView):
     def perform_update(self, serializer):
         # Example: Log updates or apply additional validations
         serializer.save()  # Customize save logic as needed
+
+# from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
