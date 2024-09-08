@@ -32,17 +32,17 @@ def login_view(request):
 # Logout View
 def logout_view(request):
     logout(request)
-    return render(request, 'logout.html')
+    return render(request, 'relationship_app/logout.html')
 
 # Function-based view to list all books
 def list_books(request):
     books = Book.objects.all()
-    return render(request, 'list_books.html', {'books': books})
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 # Class-based view to display library details
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = 'library_detail.html'
+    template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
 # Role-based views
@@ -57,15 +57,15 @@ def is_member(user):
 
 @user_passes_test(is_admin)
 def admin_view(request):
-    return render(request, 'admin_view.html')
+    return render(request, 'relationship_app/admin_view.html')
 
 @user_passes_test(is_librarian)
 def librarian_view(request):
-    return render(request, 'librarian_view.html')
+    return render(request, 'relationship_app/librarian_view.html')
 
 @user_passes_test(is_member)
 def member_view(request):
-    return render(request, 'member_view.html')
+    return render(request, 'relationship_app/member_view.html')
 
 # Permission-required views
 @permission_required('relationship_app.can_add_book')
