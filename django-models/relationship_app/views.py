@@ -4,6 +4,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.views.generic import DetailView
 from .models import Book, Library
+from .models import Library
 
 # Registration View
 def register_view(request):
