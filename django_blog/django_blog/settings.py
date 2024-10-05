@@ -137,4 +137,4 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = 'home'  # Assuming you have a URL named 'home'
 
-LOGOUT_REDIRECT_URL = 'home'
+# LOGOUT_REDIRECT_URL = 'home'
