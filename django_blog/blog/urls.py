@@ -1,8 +1,8 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import  PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, 
-    CommentUpdateView, CommentDeleteView, post_detail
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, search
+from taggit.models import Tag
 
 
 app_name = 'blog'  
@@ -21,4 +21,6 @@ urlpatterns = [
     path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='comment-create'),
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment-update'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
+    path('tags/<slug:slug>/', PostListView.as_view(), name='post-tag'),  # View posts by tag
+    path('search/', search, name='search'),  # Search functionality
 ]

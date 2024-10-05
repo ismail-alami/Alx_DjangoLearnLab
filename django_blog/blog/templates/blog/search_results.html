@@ -1,0 +1,16 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h2>Search Results</h2>
+    {% if results %}
+        <ul>
+            {% for post in results %}
+                <li>
+                    <a href="{% url 'blog:post-detail' post.pk %}">{{ post.title }}</a> - {{ post.published_date }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found for "{{ query }}".</p>
+    {% endif %}
+{% endblock %}

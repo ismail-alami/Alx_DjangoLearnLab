@@ -16,6 +16,18 @@ from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic import UpdateView, DeleteView
 from .models import Post, Comment
 from .forms import CommentForm
+from django.db.models import Q
+from .models import Post
+from django.shortcuts import render
+
+def search(request):
+    query = request.GET.get('q')  # Get the search query from the user input
+    results = None
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
+        ).distinct()  # Search by title, content, or tags
+    return render(request, 'search_results.html', {'results': results, 'query': query})
 
 # Home view - For the home page after login or for general use
 def home(request):
