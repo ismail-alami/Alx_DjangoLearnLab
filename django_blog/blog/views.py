@@ -179,3 +179,13 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author  # Only allow the author to delete the comment
+
+from taggit.models import Tag
+
+class TaggedPostListView(ListView):
+    model = Post
+    template_name = 'post_list.html'
+
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, slug=self.kwargs.get('slug'))
+        return Post.objects.filter(tags__in=[tag])
