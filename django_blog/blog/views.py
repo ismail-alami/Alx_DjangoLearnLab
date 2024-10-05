@@ -10,6 +10,12 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.views.generic import UpdateView, DeleteView
+from .models import Post, Comment
+from .forms import CommentForm
 
 # Home view - For the home page after login or for general use
 def home(request):
@@ -96,3 +102,54 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
+# Post detail view with comments
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comments = post.comments.all()  # Get all comments for the post
+    new_comment = None
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.author = request.user
+            new_comment.save()
+            return redirect('blog:post-detail', pk=post.pk)  # Refresh the page after posting
+    else:
+        comment_form = CommentForm()
+
+    return render(request, 'post_detail.html', {
+        'post': post,
+        'comments': comments,
+        'new_comment': new_comment,
+        'comment_form': comment_form
+    })
+
+# Update a comment (Only the author can update their comment)
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'comment_form.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author  # Only allow the author to edit the comment
+
+# Delete a comment (Only the author can delete their comment)
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = 'comment_confirm_delete.html'
+
+    def get_success_url(self):
+        post = self.get_object().post
+        return reverse_lazy('blog:post-detail', kwargs={'pk': post.pk})
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author  # Only allow the author to delete the comment
