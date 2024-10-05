@@ -126,7 +126,21 @@ def post_detail(request, pk):
         'new_comment': new_comment,
         'comment_form': comment_form
     })
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'comment_form.html'
 
+    # Override form_valid to link the comment with the correct post and author
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        post = get_object_or_404(Post, pk=self.kwargs['pk'])  # Get the correct post
+        form.instance.post = post
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        post = self.object.post
+        return reverse_lazy('blog:post-detail', kwargs={'pk': post.pk})
 # Update a comment (Only the author can update their comment)
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
